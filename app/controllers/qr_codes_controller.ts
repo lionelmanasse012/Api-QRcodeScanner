@@ -38,6 +38,8 @@ export default class QrCodesController {
             return response.badRequest({ success: false, message: 'Tous les champs sont requis.' })
         }
 
+        const QRCodeSerial = this.generateSerialNumber()
+
         try {
             // Génération du QR Code en base64 avec les données
             const qrCodeData = `
@@ -46,7 +48,7 @@ export default class QrCodesController {
         Bon: ${bon}
         Carrière: ${carriere}
         Ministre: ${ministre}
-        QRCodeSerial: ${this.generateSerialNumber()}
+        QRCodeSerial: ${QRCodeSerial}
       `
             const qrCodeImage = await QRCode.toDataURL(qrCodeData)
 
@@ -57,7 +59,7 @@ export default class QrCodesController {
             newQrCode.bon = bon
             newQrCode.carriere = carriere
             newQrCode.ministre = ministre
-            newQrCode.qrCodeSerial = this.generateSerialNumber()  // Générer un numéro unique pour le QR Code
+            newQrCode.qrCodeSerial = QRCodeSerial
             newQrCode.qrCodeData = qrCodeImage  // Sauvegarder l'image base64 du QR Code
             newQrCode.status = 'pending'  // Définir le statut initial du QR Code
             await newQrCode.save()
