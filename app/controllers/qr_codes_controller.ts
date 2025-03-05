@@ -24,8 +24,8 @@ export default class QrCodesController {
         // Retourner le statut du QR Code
         return response.ok({
             success: true,
-            status: qrCode.status,
-            message: `Statut du QR Code : ${qrCode.status}.`
+            message: `Statut du QR Code : ${qrCode.status}.`,
+            data: qrCode.toJSON()
         })
     }
 
